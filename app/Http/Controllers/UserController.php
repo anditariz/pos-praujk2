@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -13,8 +14,11 @@ class UserController extends Controller
     {
         $title = "Data Users";
         $datas = User::all();
-
-        return view('user.index', compact('title', 'datas'));
+        $privilageAll = Session::get('privilage');
+        $path = request()->path();
+        $currentpath = "/{$path}";
+        $privilage = $privilageAll[$currentpath];
+        return view('user.index', compact('title', 'datas' , 'privilage'));
     }
 
 

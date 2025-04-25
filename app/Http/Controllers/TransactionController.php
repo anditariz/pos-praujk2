@@ -8,6 +8,7 @@ use App\Models\Orders;
 use App\Models\orderDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -22,7 +23,11 @@ class TransactionController extends Controller
     {
         $title = "Orders";
         $datas = Orders::orderBy('id', 'desc')->get();
-        return view('pos.index', compact('title', 'datas'));
+        $privilageAll = Session::get('privilage');
+        $path = request()->path();
+        $currentpath = "/{$path}";
+        $privilage = $privilageAll[$currentpath];
+        return view('pos.index', compact('title', 'datas' , 'privilage'));
     }
 
     /**

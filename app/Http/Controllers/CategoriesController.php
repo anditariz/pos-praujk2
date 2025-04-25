@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
@@ -12,10 +14,16 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+
+        // return Auth::check();
+
         $title = "Data Categories";
         $datas = Categories::all();
-
-        return view('categories.index', compact('title', 'datas'));
+        $privilageAll = Session::get('privilage');
+        $path = request()->path();
+        $currentpath = "/{$path}";
+        $privilage = $privilageAll[$currentpath];
+        return view('categories.index', compact('title', 'datas' , 'privilage'));
     }
 
     /**

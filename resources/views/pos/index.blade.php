@@ -17,9 +17,11 @@
                         @endif
 
                         <div class="mt-4 mb-3">
-                            <div align="left" class="mb-3">
-                                <a class="btn btn-primary" href="{{ route('pos.create') }}">Add Pos</a>
-                            </div>
+                            @if ($privilage[0]['create'])
+                                <div align="left" class="mb-3">
+                                    <a class="btn btn-primary" href="{{ route('pos.create') }}">Add Pos</a>
+                                </div>
+                            @endif
                             <table class="table table-bordered table-striped table-hover">
                                 <thead align="center" class="table-dark">
                                     <tr>
@@ -40,14 +42,20 @@
                                         <td>{{ $data->order_date }}</td>
                                         <td>{{ $data->order_amount }}</td>
                                         <td>{{ $data->order_status ? 'Paid' : 'Unpaid' }}</td>
-                                        <td>
-                                            <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-                                            <a href="{{ route('pos.edit', $data->id) }}" class="btn btn-sm btn-success">
-                                                <i class="bi bi-printer"></i>
-                                            </a>
-                                        </td>
+                                        @if ($privilage[0]['update'] || $privilage[0]['view'])
+                                            <td>
+                                                @if ($privilage[0]['view'])
+                                                    <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-secondary">
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                                @endif
+                                                @if ($privilage[0]['update'])
+                                                    <a href="{{ route('pos.edit', $data->id) }}" class="btn btn-sm btn-success">
+                                                        <i class="bi bi-printer"></i>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>

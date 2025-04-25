@@ -4,6 +4,7 @@ use App\Http\Controllers\BelajarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CasheerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckUserLogin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CategoriesController;
@@ -25,7 +26,11 @@ Route::post('actionTambah', [BelajarController::class, 'actionTambah']);
 Route::post('actionKurang', [BelajarController::class, 'actionKurang']);
 
 Route::resource('dashboard', DashboardController::class);
-Route::resource('categories', CategoriesController::class);
+
+Route::middleware([CheckUserLogin::class])->group(function() {
+    Route::resource('categories', CategoriesController::class);
+})->withoutMiddleware([CheckUserLogin::class]);
+
 Route::resource('products', ProductController::class);
 route::resource('pos', TransactionController::class);
 Route::get('casheer', [CasheerController::class, 'index']);

@@ -6,6 +6,7 @@ use App\Models\Categories;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -18,7 +19,11 @@ class ProductController extends Controller
     {
         $title = "Data Products";
         $datas = Products::with('category')->get();
-        return view('products.index', compact('title', 'datas'));
+        $privilageAll = Session::get('privilage');
+        $path = request()->path();
+        $currentpath = "/{$path}";
+        $privilage = $privilageAll[$currentpath];
+        return view('products.index', compact('title', 'datas' , 'privilage'));
     }
 
     /**

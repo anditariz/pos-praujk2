@@ -1,0 +1,68 @@
+[
+    {
+        "group" : "Master Data",
+        "route" : "/casheer",
+        "name" : "Casheer",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    },
+    {
+        "group" : "Master Data",
+        "route" : "/categories",
+        "name" : "Categories",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    },
+    {
+        "group" : "Master Data",
+        "route" : "/users",
+        "name" : "User",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    },
+    {
+        "group" : "Master Data",
+        "route" : "/products",
+        "name" : "Products",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    },
+    {
+        "group" : "Pos Manage",
+        "route" : "/pos/create",
+        "name" : "POS",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    },
+    {
+        "group" : "Pos Manage",
+        "route" : "/pos",
+        "name" : "Pos Sale",
+        "privilage" : {
+            "create" : true,
+            "update" : true,
+            "delete" : true,
+            "view" : true
+        }
+    }
+]

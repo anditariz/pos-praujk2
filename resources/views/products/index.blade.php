@@ -17,9 +17,11 @@
                         @endif
 
                         <div class="mt-4 mb-3">
-                            <div align="left" class="mb-3">
-                                <a class="btn btn-primary" href="{{ route('products.create') }}">Add Product</a>
-                            </div>
+                            @if ($privilage[0]['create'])
+                                <div align="left" class="mb-3">
+                                    <a class="btn btn-primary" href="{{ route('products.create') }}">Add Product</a>
+                                </div>
+                            @endif
                             <table class="table table-bordered table-striped table-hover">
                                 <thead align="center" class="table-dark">
                                     <tr>
@@ -42,18 +44,24 @@
                                         <td>{{ $data->product_name }}</td>
                                         <td>{{ $data->product_price }}</td>
                                         <td>{{ $data->is_active ? 'publish' : 'Draft' }}</td>
-                                        <td>
-                                            <a href="{{ route('products.edit', $data->id) }}" class="btn btn-sm btn-secondary">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('products.destroy', $data->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+                                        @if ($privilage[0]['update'] || $privilage[0]['delete'])
+                                            <td>
+                                                @if ($privilage[0]['update'])
+                                                    <a href="{{ route('products.edit', $data->id) }}" class="btn btn-sm btn-secondary">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </a>
+                                                @endif
+                                                @if ($privilage[0]['delete'])
+                                                    <form action="{{ route('products.destroy', $data->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
