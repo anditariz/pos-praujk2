@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticController;
 use App\Http\Controllers\BelajarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CasheerController;
@@ -25,21 +26,26 @@ Route::post('action-login', [LoginController::class, 'actionLogin']);
 Route::post('actionTambah', [BelajarController::class, 'actionTambah']);
 Route::post('actionKurang', [BelajarController::class, 'actionKurang']);
 
-Route::resource('dashboard', DashboardController::class);
+// Route::resource('dashboard', DashboardController::class);
 
 Route::middleware([CheckUserLogin::class])->group(function() {
     Route::resource('categories', CategoriesController::class);
-})->withoutMiddleware([CheckUserLogin::class]);
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('pos', TransactionController::class);
+    Route::resource('users', controller: UserController::class);
+    Route::resource('analytic', controller: AnalyticController::class);
 
-Route::resource('products', ProductController::class);
-route::resource('pos', TransactionController::class);
-Route::get('casheer', [CasheerController::class, 'index']);
+    Route::get('casheer', [CasheerController::class, 'index'])->name('casheer.index');
+})->withoutMiddleware([CheckUserLogin::class]);
 
 
 Route::get('get-product/{id}', [TransactionController::class, 'getProduct']);
+Route::get('/product/get-all', [ProductController::class, 'getProduct']);
+Route::get('/analyze/getwidget' , [AnalyticController::class , 'getwidget']);
 
 
-Route::resource('users', controller: UserController::class);
+// Route::resource('users', controller: UserController::class);
 route::get('logout', [LoginController::class, 'logout']);
 
 

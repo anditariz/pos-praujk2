@@ -15,6 +15,10 @@ class Products extends Model
         'is_active',
     ];
 
+    protected $casts = [
+        'product_price' => 'float', // atau 'double'
+    ];
+
     public function category()
     {
         return $this->belongsTo(Categories::class, 'category_id','id');

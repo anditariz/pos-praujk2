@@ -1,0 +1,107 @@
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slideIn {
+    animation: slideIn 0.5s ease-out forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+.sidebar-item {
+    transition: all 0.3s ease;
+}
+
+.sidebar-item:hover {
+    transform: translateX(4px);
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.table-row {    
+    transition: all 0.2s ease;
+}
+
+.table-row:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.theme-dot {
+    transition: all 0.3s ease;
+}
+
+.theme-dot:hover {
+    transform: scale(1.2);
+}
+
+.theme-dot.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
+}
+
+.sidebar-group-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.sidebar-group.active .sidebar-group-items {
+    max-height: 500px;
+    transition: max-height 0.5s ease-in;
+}
+
+.modal {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.modal.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.input-focus:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #68D391;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #68D391;
+}

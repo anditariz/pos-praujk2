@@ -1,246 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-
-        <title>@yield('title')</title>
-        <meta content="" name="description" />
-        <meta content="" name="keywords" />
-
-        <!-- Favicons -->
-        <link href="{{ asset('assets/img/favicon.png') }}" rel="icon" />
-        <link
-            href="{{ asset('assets/img/apple-touch-icon.png') }}"
-            rel="apple-touch-icon"
-        />
-
-        <!-- Google Fonts -->
-        <link href="https://fonts.gstatic.com" rel="preconnect" />
-        <link
-            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-            rel="stylesheet"
-        />
-
-        <!-- Vendor CSS Files -->
-
-        <link
-            href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{
-                asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')
-            }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset('assets/vendor/quill/quill.snow.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset('assets/vendor/quill/quill.bubble.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset('assets/vendor/remixicon/remixicon.css') }}"
-            rel="stylesheet"
-        />
-        <link
-            href="{{ asset('assets/vendor/simple-datatables/style.css') }}"
-            rel="stylesheet"
-        />
-
-        <!-- Template Main CSS File -->
-        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-
-        <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-    </head>
-
-    <body>
-        <!-- ======= Header ======= -->
-        @include('sweetalert::alert') @include('layouts.inc.header')
-
-        <!-- ======= Sidebar ======= -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('assets/css/pos.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/analitic.css')}}">
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .animate-slideIn {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            transform: translateX(4px);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .table-row {
+            transition: all 0.2s ease;
+        }
+        
+        .table-row:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .theme-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .theme-dot:hover {
+            transform: scale(1.2);
+        }
+        
+        .theme-dot.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
+        }
+        
+        .sidebar-group-items {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        
+        .sidebar-group.active .sidebar-group-items {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        
+        .modal {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            green: '#10B981',
+                            blue: '#3B82F6',
+                            purple: '#8B5CF6',
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-300">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
         @include('layouts.inc.sidebar')
-
-        <main id="main" class="main">
-            <div class="pagetitle">
-                <h1>@yield('title')</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item">Pages</li>
-                        <li class="breadcrumb-item active">Blank</li>
-                    </ol>
-                </nav>
+        
+        <!-- Main Content -->
+        <div class="flex flex-col flex-1 overflow-hidden">
+            <!-- Top Navigation -->
+            @include('layouts.inc.navbar')
+            
+            <!-- Main Content Area -->
+            <div class="flex-1 overflow-auto p-4">
+                @yield('content')
             </div>
-            <!-- End Page Title -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{asset('assets/js/pos.js')}}"></script>
+    <script src="{{asset('assets/js/analitic.js')}}"></script>
+    <script>
+        const hidePasswordButton = document.querySelector('#hide-password');
+        if(hidePasswordButton) {
+            hidePasswordButton.addEventListener("click", function () {
+            const passwordInput = document.getElementById("password");
+            const icon = this.querySelector("i");
 
-            @yield('content')
-        </main>
-        <!-- End #main -->
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+            });
+        }
 
-        <!-- ======= Footer ======= -->
-        @include('layouts.inc.footer')
+        const modalButton = document.querySelectorAll('.eg-modal-toogle');
 
-        <a
-            href="#"
-            class="back-to-top d-flex align-items-center justify-content-center"
-            ><i class="bi bi-arrow-up-short"></i
-        ></a>
+        function modalInisiate() {
+            // console.log(modalButton);
+            modalButton.forEach((btn) => {
+                // console.log(btn)
+                btn.addEventListener("click", (e) => {
+                    modalTargetId = e.target.getAttribute("data-id")
+                    modal = document.getElementById(modalTargetId)
 
-        <!-- Vendor JS Files -->
-        <script src="{{
-                asset('assets/vendor/apexcharts/apexcharts.min.js')
-            }}"></script>
-        <script src="{{
-                asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')
-            }}"></script>
-        <script src="{{
-                asset('assets/vendor/chart.js/chart.umd.js')
-            }}"></script>
-        <script src="{{
-                asset('assets/vendor/echarts/echarts.min.js')
-            }}"></script>
-        <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
-        <script src="{{
-                asset('assets/vendor/simple-datatables/simple-datatables.js')
-            }}"></script>
-        <script src="{{
-                asset('assets/vendor/tinymce/tinymce.min.js')
-            }}"></script>
-        <script src="{{
-                asset('assets/vendor/php-email-form/validate.js')
-            }}"></script>
+                    // console.log(modalTargetId)
+                    if (modal) {
+                        openModal(modal);
+                    }
+                    // console.log(modal)
 
-        <!-- Template Main JS File -->
-        <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
-        <script src="{{ asset('assets/js/main.js') }}"></script>
+                    closeButton = document.querySelectorAll(`#${modalTargetId} .eg-close-modal`)
+                    closeButton.forEach((closeBtn) => {
+                        closeBtn.addEventListener("click" , (e)=> {
+                            closeModal(modal);
+                        });
+                    });
+                });
+            });
+        }
 
-        @include('sweetalert::alert', ['cdn' =>
-        "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+        function openModal(modal) {
+                modal.classList.add('active');
+                modalContent = modal.querySelector('div');
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                }, 10);
+        }
+            
+        function closeModal(modal) {
+                modalContent = modal.querySelector('div');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.remove('active');
+                }, 300);
+        }
 
-        <script>
-            function formatRupiah(number) {
-                
-                const formatted = number.toLocaleString("id", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
+        document.addEventListener('DOMContentLoaded', function() {
+            modalInisiate();
+            themeInisiate();
+            sidebarInisiate();
+        });
+
+        let activeClassList = ["bg-primary-blue/10", "text-primary-blue", "dark:bg-primary-blue/20"];
+        let dectiveClassList = ["hover:bg-gray-100", "dark:hover:bg-gray-700"];
+
+        function themeInisiate() {
+            // Set default theme to blue
+            let currentTheme = 'blue';
+            
+            // Theme switcher buttons
+            const themeGreen = document.getElementById('theme-green');
+            const themeBlue = document.getElementById('theme-blue');
+            const themePurple = document.getElementById('theme-purple');
+            const themeDots = document.querySelectorAll('.theme-dot');
+            
+            // Dark mode toggle
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            
+            // Modal elements
+            const openModalBtn = document.getElementById('open-modal');
+            // const closeModalBtn = document.getElementById('close-modal');
+            // const cancelModalBtn = document.getElementById('cancel-modal');
+            // const modal = document.getElementById('modal');
+            // const modalContent = modal.querySelector('div');
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.getElementById('mobile-menu-button');
+            const sidebar = document.querySelector('.hidden.md\\:flex');
+            
+
+            // Apply theme
+            function applyTheme(theme) {
+                // Update all elements with primary color classes
+                document.querySelectorAll('[class*="primary-"]').forEach(el => {
+                    const classes = el.className.split(' ');
+                    const newClasses = classes.map(cls => {
+                        if (cls.includes('primary-')) {
+                            return cls.replace(/primary-(green|blue|purple)/, `primary-${theme}`);
+                        }
+                        return cls;
+                    });
+                    el.className = newClasses.join(' ');
                 });
 
-                return formatted;
+                let newActiveClassList = [];
+                activeClassList.forEach((cls) => {
+                    if (cls.includes('primary-')) {
+                        newActiveClassList.push(cls.replace(/primary-(green|blue|purple)/, `primary-${theme}`));
+                    } else {
+                        newActiveClassList.push(cls)
+                    }
+                })
+                activeClassList = newActiveClassList
+                
+                // Update logo color
+                const logoIcon = document.querySelector('.fa-cube');
+                if (logoIcon) {
+                    logoIcon.classList.remove('text-primary-green', 'text-primary-blue', 'text-primary-purple');
+                    logoIcon.classList.add(`text-primary-${theme}`);
+                }
+                
+                // Update active theme dot
+                themeDots.forEach(dot => dot.classList.remove('active'));
+                document.getElementById(`theme-${theme}`).classList.add('active');
+                
+                currentTheme = theme;
+                localStorage.setItem('theme', theme);
             }
-
-
-
-            $("#category_id").change(function () {
-                let cat_id = $(this).val()
-                let option = `<option value="">Select One</option>`;
-
-                $.ajax({
-                    url: "/get-product/" + cat_id,
-                    type: "GET",
-                    dataType: "json",
-                    success: function (resp) {
-                        // $("#product_id").empty();
-                        // console.log("response", resp);
-                        $.each(resp.data, function(index, value) {
-                            option +=
-                             `<option value="${value.id}"data-price="${value.product_price}" data-img="${value.product_photo}"">${value.product_name}</option>`;
-                        });
-                        $('#product_id').html(option); 
+            
+            // Toggle dark mode
+            function toggleDarkMode() {
+                const html = document.documentElement;
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    localStorage.setItem('darkMode', 'false');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('darkMode', 'true');
+                }
+            }
+            
+            // Check for saved preferences
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.classList.add('dark');
+            }
+            
+            const savedTheme = localStorage.getItem('theme') || 'blue';
+            applyTheme(savedTheme);
+            
+            // Modal functions
+            // function openModal() {
+            //     modal.classList.add('active');
+            //     setTimeout(() => {
+            //         modalContent.classList.remove('scale-95');
+            //         modalContent.classList.add('scale-100');
+            //     }, 10);
+            // }
+            
+            // function closeModal() {
+            //     modalContent.classList.remove('scale-100');
+            //     modalContent.classList.add('scale-95');
+            //     setTimeout(() => {
+            //         modal.classList.remove('active');
+            //     }, 300);
+            // }
+            
+            // Event listeners
+            themeGreen.addEventListener('click', () => applyTheme('green'));
+            themeBlue.addEventListener('click', () => applyTheme('blue'));
+            themePurple.addEventListener('click', () => applyTheme('purple'));
+            
+            darkModeToggle.addEventListener('click', toggleDarkMode);
+            
+            // Modal functionality
+            // openModalBtn.addEventListener('click', openModal);
+            // closeModalBtn.addEventListener('click', closeModal);
+            // cancelModalBtn.addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            // modal.addEventListener('click', (e) => {
+            //     if (e.target === modal) {
+            //         closeModal();
+            //     }
+            // });
+            
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+            });
+            
+            // Sidebar group toggle functionality
+            document.querySelectorAll('.sidebar-group button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const group = button.closest('.sidebar-group');
+                    const icon = button.querySelector('.fa-chevron-down');
+                    
+                    group.classList.toggle('active');
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+            
+            // Animate elements on scroll
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.animate-fadeIn, .animate-slideIn');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+                    
+                    if (elementPosition < windowHeight - 100) {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
                     }
                 });
-            });
-
-            $(".add-row").click(function() {
-                let tbody = $('tbody');
-                let selectedOption = $('#product_id').find('option:selected');
-                let namaProduk = selectedOption.text()
-                let productId = selectedOption.val()
-                let photoProduct = selectedOption.data('img');
-                let productPrice = parseInt(selectedOption.data('price')) || 0;
+            };
             
-
-                if($('#category_id').val() == "") {
-                    alert("Category required");
-                    return false;
-                }
-
-                if($('#product_id').val() == "") {
-                    alert("product required");
-                    return false;
-                }
-
+            // Initial check
+            animateOnScroll();
             
-                let baseStorageUrl = "{{ asset('storage') }}";
+            // Check on scroll
+            window.addEventListener('scroll', animateOnScroll);
+        }
 
-                let newRow = "<tr>";
-                    newRow += `<td><img width="100px" src="${baseStorageUrl}/${photoProduct}" alt="Ini gambar"></td>`;
-                    newRow += `<td>${namaProduk} <input type ="hidden" name="product_id[]" value="${productId}"></td>`;
-                    newRow += `<td width='110px'><input value='1' type = 'number' name='qty[]'class='qty form-control'></td>`
-                    newRow += `<td><input type ="hidden" name="order_price[]" value="${productPrice}"><span class='price' data-price=${productPrice}>Rp. ${formatRupiah(productPrice)}</span></td>`
-                    newRow += `<td><input type ="hidden" class='subtotal_input' name="order_subtotal[]" value="${productPrice}"><span class ='subtotal'>${formatRupiah(productPrice)}</span></td>`
-                    newRow += `<td><button class="btn btn-danger btn-sm delete-row" type="button"><i class="bi bi-trash"></i></button></td>`
-                    newRow += "</tr>";
+        function sidebarInisiate() 
+        {
+            document.querySelectorAll('#SideBarItem').forEach((element) => {
+                if (element.getAttribute("href") == window.location.pathname) {
+                    changeSidebar(element)
+                }
+            })
 
-                    tbody.append(newRow);
-                    calculateSubTotal();
+            document.querySelectorAll('#DashboardSingleSideBar').forEach((element) => {
+                if (element.getAttribute("href") == window.location.pathname) {
+                    changeSingleSidebar(element)
+                }
+            })
+        }
 
-                    clearAll();
+        function changeSingleSidebar(reference) {
+            activeClassList.forEach((cls) => {
+                reference.classList.add(cls)
+            })
+            dectiveClassList.forEach((cls) => {
+                reference.classList.remove(cls)
+            })
+        }
 
-                    $('.qty').off().on('input', function () {
-                        // alert('tess');
-                        let row = $(this).closest('tr');
-                        let qty = parseInt($(this).val()) || 0;
-                        let price = parseInt(row.find('.price').data('price')) || 0;
-                        let total = qty * price;
-                        row.find('.subtotal').text(formatRupiah(total)); //NaN
-                        row.find('.subtotal_input').val(formatRupiah(total));//NaN
-                        calculateSubTotal();
-                    
-                    })
-            });
-
-            function clearAll() {
-                $('#category_id').val('');
-                $('#product_id').val('');
+        function changeSidebar(reference) {
+            group = reference.closest('.sidebar-group');
+            icon = group.querySelector('.fa-chevron-down');
+            if (group) {                    
+                group.classList.toggle('active');
+                icon.classList.toggle('rotate-180');
+            } else {
+                console.log("ga ada parentElement")
             }
 
-function calculateSubTotal() {
-    let grandtotal = 0;
-    $('.subtotal').each(function () {
-        // let total = parseInt($(this).text()) || 0;
-        // let total = parseInt($(this).text().replace(/\./g, ''));
-        let total = parseInt($(this).text().replace(/\./g, '').replace('Rp', '').trim()) || 0;
-        grandtotal += total;        
-    });
-
-    $('.grandtotal').text(formatRupiah(grandtotal));
-    $('input[name="grandtotal"]').val(grandtotal);
-
-    $(document).on('click', '.delete-row', function(){
-        $(this).closest('tr').remove();
-        calculateSubTotal();
-
-        });
-}
-
-
-
-        </script>
-    </body>
+            activeClassList.forEach((cls) => {
+                reference.classList.add(cls)
+            })
+            dectiveClassList.forEach((cls) => {
+                reference.classList.remove(cls)
+            })
+        };
+    </script>
+</body>
 </html>

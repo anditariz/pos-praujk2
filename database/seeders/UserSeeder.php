@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('rahasia'),
         ]);
 
-        $role = Role::where('name', 'admin')->first();
+        $role = Role::where('name', 'Admin')->first();
         $admin->roles()->attach($role->id);
 
         $kasir = User::create([
@@ -46,6 +46,15 @@ class UserSeeder extends Seeder
 
         $role = Role::where('name', 'Pimpinan')->first();
         $pimpinan->roles()->attach($role->id);
+
+        $super_admin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'superadmin@gmail.com',
+            'password' => Hash::make('rahasia'),
+        ]);
+
+        $role = Role::where('name', 'Super Admin')->first();
+        $super_admin->roles()->attach($role->id);
     }
 }
 

@@ -45,6 +45,8 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         // ORD-100425001
+        // dd($request);
+        // return $request;
         $qOrderCode = Orders::max('id');
         $qOrderCode++;
         $orderCode = "ORD" . date("dmy") . sprintf("%03d", $qOrderCode);
@@ -59,24 +61,24 @@ class TransactionController extends Controller
         $order = Orders::create($data);
         $qty = $request->qty;
         foreach ($qty as $key => $data) {
-            $order_details = orderDetails::create([
+            orderDetails::create([
                 'order_id' => $order->id,
                 'product_id' => $request->product_id[$key],
                 'qty' => $request->qty[$key],
                 'order_price' => $request->order_price[$key],
                 'order_subtotal' => $request->order_subtotal[$key],
             ]);
-            return $order_details;
+            // return $order_details;
         }
 
-        if ($request->hasFile('product_photo')) {
-            $photo = $request->file('product_photo')->store('products', 'public');
-            $data['product_photo'] = $photo;
-        }
+        // if ($request->hasFile('product_photo')) {
+        //     $photo = $request->file('product_photo')->store('products', 'public');
+        //     $data['product_photo'] = $photo;
+        // }
 
-        Products::create($data);
+        // Products::create($data);
 
-        return redirect()->route('products.index')->with('success', 'Product added successfully');
+        return redirect()->route('casheer.index')->with('success', 'Product added successfully');
 
     }
 

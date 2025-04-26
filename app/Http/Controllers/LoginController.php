@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -27,14 +28,20 @@ class LoginController extends Controller
         $credentials = $request->only('email','password');
         // Auth
         if (Auth::attempt($credentials)) {
+            $userid = Auth::user();
+            // return $userid->id;
+            $user = User::with('roles')->where('id', $userid->id)->first();
             $request->session()->regenerate();
             $contents = File::get(base_path('resources/views/layouts/inc/routing.json'));
             $routings = json_decode(json: $contents, associative: true);
+            $routings = $routings[$user->roles[0]->name];
             $privilage = [];
 
             foreach ($routings as $route) {
                 $privilage[$route['route']][] = $route['privilage'];
             }
+
+            // return $routings[$user->roles()->first()];
 
             $request->session()->put('routings' , $routings);
             $request->session()->put('privilage' , $privilage);

@@ -1,68 +1,188 @@
-[
-    {
-        "group" : "Master Data",
-        "route" : "/casheer",
-        "name" : "Casheer",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
+{
+    "Super Admin": [
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/categories",
+            "name": "Categories",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/users",
+            "name": "User",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/products",
+            "name": "Products",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Pos Manage",
+            "route": "/pos/create",
+            "name": "POS",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Pos Manage",
+            "route": "/pos",
+            "name": "Pos Sale",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Pos Manage",
+            "icon": "fa-database",
+            "route": "/casheer",
+            "name": "Casheer",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Report",
+            "icon": "fa-chart-simple",
+            "route": "/analytic",
+            "name": "Analitic",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
         }
-    },
-    {
-        "group" : "Master Data",
-        "route" : "/categories",
-        "name" : "Categories",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
+    ],
+    "Admin": [
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/categories",
+            "name": "Categories",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/users",
+            "name": "User",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Master Data",
+            "icon": "fa-database",
+            "route": "/products",
+            "name": "Products",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
+        },
+        {
+            "group": "Report",
+            "icon": "fa-chart-simple",
+            "route": "/analytic",
+            "name": "Analitic",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
         }
-    },
-    {
-        "group" : "Master Data",
-        "route" : "/users",
-        "name" : "User",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
+    ],
+    "Kasir": [
+        {
+            "group": "",
+            "icon": "fa-database",
+            "route": "/products",
+            "name": "Products",
+            "privilage": {
+                "create": false,
+                "update": false,
+                "delete": false,
+                "view": true
+            }
+        },
+        {
+            "group": "",
+            "icon": "fa-cash-register",
+            "route": "/casheer",
+            "name": "Cashier",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
         }
-    },
-    {
-        "group" : "Master Data",
-        "route" : "/products",
-        "name" : "Products",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
+    ],
+    "Pimpinan": [
+        {
+            "group": "",
+            "icon": "fa-database",
+            "route": "/products",
+            "name": "Products",
+            "privilage": {
+                "create": false,
+                "update": false,
+                "delete": false,
+                "view": true
+            }
+        },
+        {
+            "group": "",
+            "icon": "fa-chart-simple",
+            "route": "/analytic",
+            "name": "Analitic",
+            "privilage": {
+                "create": true,
+                "update": true,
+                "delete": true,
+                "view": true
+            }
         }
-    },
-    {
-        "group" : "Pos Manage",
-        "route" : "/pos/create",
-        "name" : "POS",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
-        }
-    },
-    {
-        "group" : "Pos Manage",
-        "route" : "/pos",
-        "name" : "Pos Sale",
-        "privilage" : {
-            "create" : true,
-            "update" : true,
-            "delete" : true,
-            "view" : true
-        }
-    }
-]
+    ]
+}

@@ -1,70 +1,81 @@
 @extends('layouts.main')
-@section('title', 'Orders')
-
+@section('title', 'Dashboard')
 @section('content')
-<div class="container mt-4">
-    <section class="section">
-        <div class="row d-flex justify-content-center">
-            <div class="col-lg-10">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">@isset($title) {{ $title }} @endisset</h5>
 
-                        @if(session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+{{-- @include('products.modal') --}}
 
-                        <div class="mt-4 mb-3">
-                            @if ($privilage[0]['create'])
-                                <div align="left" class="mb-3">
-                                    <a class="btn btn-primary" href="{{ route('pos.create') }}">Add Pos</a>
-                                </div>
-                            @endif
-                            <table class="table table-bordered table-striped table-hover">
-                                <thead align="center" class="table-dark">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Order code</th>
-                                        <th>Order Date</th>
-                                        <th>Amount</th>
-                                        <th>Status</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody align="center">
-                                    @php $no=1; @endphp
-                                    @foreach ($datas as $data)
-                                    <tr>
-                                        <td>{{ $no++ }}</td>
-                                        <td>{{ $data->order_code}}</td>
-                                        <td>{{ $data->order_date }}</td>
-                                        <td>{{ $data->order_amount }}</td>
-                                        <td>{{ $data->order_status ? 'Paid' : 'Unpaid' }}</td>
-                                        @if ($privilage[0]['update'] || $privilage[0]['view'])
-                                            <td>
-                                                @if ($privilage[0]['view'])
-                                                    <a href="{{ route('pos.show', $data->id) }}" class="btn btn-sm btn-secondary">
-                                                        <i class="bi bi-eye"></i>
-                                                    </a>
-                                                @endif
-                                                @if ($privilage[0]['update'])
-                                                    <a href="{{ route('pos.edit', $data->id) }}" class="btn btn-sm btn-success">
-                                                        <i class="bi bi-printer"></i>
-                                                    </a>
-                                                @endif
-                                            </td>
-                                        @endif
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{-- <div class="mb-6 flex justify-between items-center animate-fadeIn">
+    <h1 class="text-2xl font-bold">Major Overview</h1>
+    <button id="open-modal" class="px-4 py-2 bg-primary-blue text-white rounded-md hover:bg-opacity-90 transition-all duration-200 transform hover:scale-105 shadow-md eg-modal-toogle" data-id="createProductModal">
+        <i class="fas fa-plus mr-2"></i> Add POS
+    </button>
+</div> --}}
+
+<div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden mb-6 animate-fadeIn" style="animation-delay: 0.5s;">
+    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+        <h2 class="text-lg font-semibold">POS</h2>
+        {{-- <div class="flex space-x-2">
+            <button class="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <i class="fas fa-download mr-1"></i> Export
+            </button>
+            <button class="px-3 py-1 text-sm bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                <i class="fas fa-filter mr-1"></i> Filter
+            </button>
+        </div> --}}
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">No</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Order code</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Order Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Amount</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                @php $no=1; @endphp
+                @foreach ($datas as $data)
+                    <tr class="table-row">
+                        @php
+                            $color = "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
+                            // $status = "Active";
+
+                            if (!$data->order_status) {
+                                $color = "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
+                                // $status = "Deactive";
+                            }
+                        @endphp
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{$no++}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $data->order_code}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $data->order_date}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">{{ $data->order_amount }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span
+                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $color }}">{{ $data->order_status ? 'Paid' : 'Unpaid' }}</span>
+                        </td>
+                        {{-- <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <button class="text-primary-blue hover:text-primary-blue/80 mr-3 transition-colors"><i class="fas fa-trash"></i></button>
+                            <button class="text-primary-green hover:text-primary-green/80 transition-colors"><i class="fas fa-edit"></i></button>
+                        </td> --}}
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+        <div class="text-sm text-gray-500 dark:text-gray-400">
+            Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">24</span> results
         </div>
-    </section>
+        <div class="flex space-x-2">
+            <button class="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 transition-colors" disabled>Previous</button>
+            <button class="px-3 py-1 text-sm bg-primary-blue text-white rounded-md hover:bg-opacity-90 transition-colors">1</button>
+            <button class="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">2</button>
+            <button class="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">3</button>
+            <button class="px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">Next</button>
+        </div>
+    </div>
 </div>
 @endsection
