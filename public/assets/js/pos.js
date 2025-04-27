@@ -8,19 +8,15 @@ const subtotalEl = document.getElementById("subtotal");
 const taxEl = document.getElementById("tax");
 const totalEl = document.getElementById("total");
 const checkoutBtn = document.getElementById("checkout-btn");
-const productsTableBody = document.getElementById(
-    "products-table-body"
-);
+const productsTableBody = document.getElementById("products-table-body");
 const closeModalBtn = document.getElementById("close-modal");
 const cancelProductBtn = document.getElementById("cancel-product");
 
-const printReceiptBtn =
-    document.getElementById("print-receipt-btn");
+const printReceiptBtn = document.getElementById("print-receipt-btn");
 const clearCartBtn = document.getElementById("clear-cart");
 const receiptModal = document.getElementById("receipt-modal");
 const closeReceiptBtn = document.getElementById("close-receipt");
-const printReceiptBtnModal =
-    document.getElementById("print-receipt");
+const printReceiptBtnModal = document.getElementById("print-receipt");
 const receiptItems = document.getElementById("receipt-items");
 const receiptSubtotal = document.getElementById("receipt-subtotal");
 const receiptTax = document.getElementById("receipt-tax");
@@ -30,32 +26,33 @@ const receiptOrderId = document.getElementById("receipt-order-id");
 const currentTimeEl = document.getElementById("current-time");
 const toggleThemeBtn = document.getElementById("toggle-theme");
 const categoryTabs = document.querySelectorAll(".category-tab");
-const GrandtotalInput = document.getElementById("GrandtotalInput")
-const changeSpan = document.getElementById('change');
-const cashInput = document.getElementById('cashInput');
+const GrandtotalInput = document.getElementById("GrandtotalInput");
+const changeSpan = document.getElementById("change");
+const cashInput = document.getElementById("cashInput");
 
 // Initialize
 document.addEventListener("DOMContentLoaded", () => {
-    const quickAddButtons = document.querySelectorAll('.quick-add');
-    cashInput.addEventListener('input', calculateChange);
+    const quickAddButtons = document.querySelectorAll(".quick-add");
+    cashInput.addEventListener("input", calculateChange);
 
-    quickAddButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const amount = parseInt(this.getAttribute('data-amount')) || 0;
+    quickAddButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            const amount = parseInt(this.getAttribute("data-amount")) || 0;
             cashInput.value = (parseInt(cashInput.value) || 0) + amount;
             calculateChange();
         });
     });
 
     if (window.location.pathname == "/casheer") {
-        axios.get('http://127.0.0.1:8001/product/get-all')
-            .then(function(response) {
+        axios
+            .get("http://127.0.0.1:8001/product/get-all")
+            .then(function (response) {
                 // const posts = response.data;
                 renderProductGrid(response.data);
                 products = response.data;
             })
-            .catch(function(error) {
-                console.error('Error:', error);
+            .catch(function (error) {
+                console.error("Error:", error);
             });
         updateCartUI();
     }
@@ -64,11 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     categoryTabs.forEach((tab) => {
         tab.addEventListener("click", () => {
             categoryTabs.forEach((t) =>
-                t.classList.remove(
-                    "active",
-                    "bg-indigo-600",
-                    "text-white"
-                )
+                t.classList.remove("active", "bg-indigo-600", "text-white")
             );
             categoryTabs.forEach((t) =>
                 t.classList.add(
@@ -79,11 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 )
             );
 
-            tab.classList.add(
-                "active",
-                "bg-indigo-600",
-                "text-white"
-            );
+            tab.classList.add("active", "bg-indigo-600", "text-white");
             tab.classList.remove(
                 "bg-white",
                 "border",
@@ -105,11 +94,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function parseCurrency(value) {
     // Hilangin $ dan , biar gampang parse angka
-    return parseFloat(value.replace(/[^0-9.-]+/g,"")) || 0;
+    return parseFloat(value.replace(/[^0-9.-]+/g, "")) || 0;
 }
 
 function formatCurrency(value) {
-    return 'Rp. ' + value.toFixed(2);
+    return "Rp. " + value.toFixed(2);
 }
 
 function calculateChange() {
@@ -119,11 +108,10 @@ function calculateChange() {
     // if (change < 0) change = 0;
     changeSpan.textContent = formatCurrency(change);
     if (change < 0) {
-        changeSpan.classList.remove("text-primary-blue")
-        changeSpan.classList.remove("text-red-700")
+        changeSpan.classList.remove("text-primary-blue");
+        changeSpan.classList.remove("text-red-700");
     }
 }
-
 
 function openAddProductModal() {
     productModal.classList.remove("hidden");
@@ -132,7 +120,7 @@ function openAddProductModal() {
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
         productModal.classList.add("hidden");
-});
+    });
 }
 
 if (cancelProductBtn) {
@@ -147,13 +135,13 @@ function renderProductGrid(datas) {
 
     datas.forEach((product) => {
         const productCard = document.createElement("div");
-                productCard.className =
-                    "product-card bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:border-indigo-100 transition cursor-pointer";
-                productCard.innerHTML = `
+        productCard.className =
+            "product-card bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:border-indigo-100 transition cursor-pointer";
+        productCard.innerHTML = `
                 <div class="relative pt-[100%]">
-                    <img src="https://www.zalora.co.id/blog/wp-content/uploads/2024/06/10-makanan-tradisional.png" alt="${
-                    product.name
-                }" class="absolute top-0 left-0 w-full h-full object-cover">
+                    <img src="../storage/${product.image}" alt="${
+            product.name
+        }" class="absolute top-0 left-0 w-full h-full object-cover">
                     ${
                         product.stock <= 5
                             ? `<div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">Low stock</div>`
@@ -198,18 +186,13 @@ function addToCart(product) {
         return;
     }
 
-    const existingItem = cart.find(
-        (item) => item.id === product.id
-    );
+    const existingItem = cart.find((item) => item.id === product.id);
 
     if (existingItem) {
         if (existingItem.quantity < product.stock) {
             existingItem.quantity++;
         } else {
-            showNotification(
-                "Cannot add more than available stock!",
-                "error"
-            );
+            showNotification("Cannot add more than available stock!", "error");
             return;
         }
     } else {
@@ -263,17 +246,13 @@ function updateCartUI() {
         cartItem.innerHTML = `
         <div class="flex items-center space-x-3">
             <div class="w-12 h-12 rounded-lg overflow-hidden">
-                <img src="https://www.zalora.co.id/blog/wp-content/uploads/2024/06/10-makanan-tradisional.png" alt="${
+                <img src="../storage/${item.image}" alt="${
             item.name
         }" class="w-full h-full object-cover">
             </div>
             <div>
-                <h4 class="text-sm font-medium text-gray-800">${
-                    item.name
-                }</h4>
-                <p class="text-xs text-gray-500">$${item.price.toFixed(
-                    2
-                )}</p>
+                <h4 class="text-sm font-medium text-gray-800">${item.name}</h4>
+                <p class="text-xs text-gray-500">$${item.price.toFixed(2)}</p>
             </div>
         </div>
         <div class="flex items-center space-x-3">
@@ -294,8 +273,12 @@ function updateCartUI() {
                 item.id
             }">
                 <input type ="hidden" name="order_subtotal[]" value="${itemTotal}"><span class='price' data-price=${itemTotal}>
-                <input type ="hidden" name="product_id[]" value="${item.id}"><span class='price' data-price=${item.id}>
-                <input type ="hidden" name="qty[]" value="${item.quantity}"><span class='price' data-price=${item.quantity}>
+                <input type ="hidden" name="product_id[]" value="${
+                    item.id
+                }"><span class='price' data-price=${item.id}>
+                <input type ="hidden" name="qty[]" value="${
+                    item.quantity
+                }"><span class='price' data-price=${item.quantity}>
                 <input type ="hidden" name="order_price[]" value="${item.price.toFixed()}"><span class='price' data-price=${item.price.toFixed()}>
                 <i class="fas fa-trash-alt text-xs text-red-600"></i>
             </button>
@@ -306,58 +289,42 @@ function updateCartUI() {
     });
 
     // Add event listeners to quantity buttons
-    document
-        .querySelectorAll(".increase-quantity")
-        .forEach((btn) => {
-            btn.addEventListener("click", (e) => {
-                const productId = parseInt(
-                    e.target
-                    .closest("button")
-                    .getAttribute("data-id")
-                );
-                const cartItem = cart.find(
-                    (item) => item.id === productId
-                );
-                const product = products.find(
-                    (p) => p.id === productId
-                );
+    document.querySelectorAll(".increase-quantity").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const productId = parseInt(
+                e.target.closest("button").getAttribute("data-id")
+            );
+            const cartItem = cart.find((item) => item.id === productId);
+            const product = products.find((p) => p.id === productId);
 
-                if (cartItem.quantity < product.stock) {
-                    cartItem.quantity++;
-                    updateCartUI();
-                } else {
-                    showNotification(
-                        "Cannot add more than available stock!",
-                        "error"
-                    );
-                }
-            });
-        });
-
-    document
-        .querySelectorAll(".decrease-quantity")
-        .forEach((btn) => {
-            btn.addEventListener("click", (e) => {
-                const productId = parseInt(
-                    e.target
-                    .closest("button")
-                    .getAttribute("data-id")
-                );
-                const cartItem = cart.find(
-                    (item) => item.id === productId
-                );
-
-                if (cartItem.quantity > 1) {
-                    cartItem.quantity--;
-                } else {
-                    cart = cart.filter(
-                        (item) => item.id !== productId
-                    );
-                }
-
+            if (cartItem.quantity < product.stock) {
+                cartItem.quantity++;
                 updateCartUI();
-            });
+            } else {
+                showNotification(
+                    "Cannot add more than available stock!",
+                    "error"
+                );
+            }
         });
+    });
+
+    document.querySelectorAll(".decrease-quantity").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            const productId = parseInt(
+                e.target.closest("button").getAttribute("data-id")
+            );
+            const cartItem = cart.find((item) => item.id === productId);
+
+            if (cartItem.quantity > 1) {
+                cartItem.quantity--;
+            } else {
+                cart = cart.filter((item) => item.id !== productId);
+            }
+
+            updateCartUI();
+        });
+    });
 
     document.querySelectorAll(".remove-item").forEach((btn) => {
         btn.addEventListener("click", (e) => {
@@ -376,7 +343,7 @@ function updateCartUI() {
     subtotalEl.textContent = `${subtotal.toFixed(2)}`;
     taxEl.textContent = `${tax.toFixed(2)}`;
     totalEl.textContent = `${total.toFixed(2)}`;
-    GrandtotalInput.setAttribute("value" , `${total.toFixed()}`)
+    GrandtotalInput.setAttribute("value", `${total.toFixed()}`);
 
     calculateChange();
 
@@ -454,12 +421,8 @@ function showReceipt(order) {
         itemRow.innerHTML = `
         <div class="col-span-6 truncate">${item.name}</div>
         <div class="col-span-2 text-right">${item.quantity}</div>
-        <div class="col-span-2 text-right">$${item.price.toFixed(
-            2
-        )}</div>
-        <div class="col-span-2 text-right">$${itemTotal.toFixed(
-            2
-        )}</div>
+        <div class="col-span-2 text-right">$${item.price.toFixed(2)}</div>
+        <div class="col-span-2 text-right">$${itemTotal.toFixed(2)}</div>
     `;
 
         receiptItems.appendChild(itemRow);
@@ -477,13 +440,8 @@ function showReceipt(order) {
         hour: "2-digit",
         minute: "2-digit",
     };
-    receiptDate.textContent = now.toLocaleDateString(
-        "en-US",
-        options
-    );
-    receiptOrderId.textContent = `ORD-${order.id
-        .toString()
-        .slice(-5)}`;
+    receiptDate.textContent = now.toLocaleDateString("en-US", options);
+    receiptOrderId.textContent = `ORD-${order.id.toString().slice(-5)}`;
 
     receiptModal.classList.remove("hidden");
 }

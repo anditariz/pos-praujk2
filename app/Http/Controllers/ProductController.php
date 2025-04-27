@@ -20,6 +20,7 @@ class ProductController extends Controller
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->select([
             'products.id as id',
+            'products.product_photo as image',
             'products.product_name as name',
             'categories.category_name as category',
             'products.product_price as price',
@@ -33,6 +34,7 @@ class ProductController extends Controller
                 'category' => $item->category,
                 'price' => (float) $item->price,
                 'stock' => (int) $item->stock,
+                'image' => $item->image
             ];
         });
         return response()->json($datas->toArray());
@@ -101,11 +103,17 @@ class ProductController extends Controller
     {
         $product = Products::find($id);
 
+        $is_active = 1;
+
+        if ($request->is_active == "nonaktif") {
+            $is_active = 0;
+        }
+
     $product->category_id = $request->category_id;
     $product->product_name = $request->product_name;
     $product->product_price = $request->product_price;
     $product->product_description = $request->product_description;
-    $product->is_active = $request->is_active;
+    $product->is_active = $is_active;
 
 
     if ($request->hasFile('product_photo')) {

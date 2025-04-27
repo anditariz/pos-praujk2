@@ -40,32 +40,32 @@
 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-white" for="product_photo">
-                      Photo
+                        Photo
                     </label>
-                    
-                    <label
-                      for="product_photo"
-                      class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300"
-                    >
-                      <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
-                        <p class="mb-1 text-sm text-gray-500 dark:text-gray-300">
-                          <span class="font-semibold">Click to upload</span> or drag and drop
-                        </p>
-                        <p class="text-xs text-gray-500 dark:text-gray-300">PNG, JPG, JPEG up to 5MB</p>
-                      </div>
-                      <input id="product_photo" name="product_photo" type="file" class="hidden" />
+
+                    <label for="product_photo"
+                        class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300">
+                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                            <p class="mb-1 text-sm text-gray-500 dark:text-gray-300">
+                                <span class="font-semibold">Click to upload</span> or drag and drop
+                            </p>
+                            <p class="text-xs text-gray-500 dark:text-gray-300">PNG, JPG, JPEG up to 5MB</p>
+                        </div>
+                        <input id="product_photo" name="product_photo" type="file" class="hidden" />
                     </label>
-                  </div>
+                </div>
 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-1" for="price">Price</label>
-                    <input id="price" type="number" name="product_price" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue dark:bg-gray-700 transition-all duration-200 input-focus">
+                    <input id="price" type="number" name="product_price"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue dark:bg-gray-700 transition-all duration-200 input-focus">
                 </div>
 
                 <div class="mb-4">
                     <label class="block text-sm font-medium mb-1" for="description">Description</label>
-                    <textarea id="description" name="product_description" rows="3" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue dark:bg-gray-700 transition-all duration-200 input-focus"></textarea>
+                    <textarea id="description" name="product_description" rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-blue focus:border-primary-blue dark:bg-gray-700 transition-all duration-200 input-focus"></textarea>
                 </div>
 
                 <div class="mb-4">
@@ -74,8 +74,7 @@
                     <div class="flex items-center space-x-6">
                         <!-- Aktif -->
                         <label for="aktif" class="relative cursor-pointer flex items-center space-x-2">
-                            <input type="radio" name="is_active" id="aktif" value="aktif"
-                                class="peer hidden" />
+                            <input type="radio" name="is_active" id="aktif" value="aktif" class="peer hidden" />
                             <div
                                 class="w-5 h-5 rounded-full border-2 border-primary-blue peer-checked:bg-primary-blue peer-checked:border-primary-blue transition-all duration-200 ease-in-out relative overflow-hidden">
                                 <!-- Ripple -->
@@ -87,8 +86,7 @@
 
                         <!-- Nonaktif -->
                         <label for="nonaktif" class="relative cursor-pointer flex items-center space-x-2">
-                            <input type="radio" name="is_active" id="nonaktif" value="nonaktif"
-                                class="peer hidden" />
+                            <input type="radio" name="is_active" id="nonaktif" value="nonaktif" class="peer hidden" />
                             <div
                                 class="w-5 h-5 rounded-full border-2 border-primary-blue peer-checked:bg-primary-blue peer-checked:border-primary-blue transition-all duration-200 ease-in-out relative overflow-hidden">
                                 <!-- Ripple -->
